@@ -1,0 +1,25 @@
+{
+  "name": "templatemd",
+  "displayName": "TemplateMD",
+  "description": "Enhance Markdowns with templates",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.106.1"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "tmd",
+      "aliases": ["TemplateMarkdown", "tmd"],
+      "extensions": [".tmd"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "tmd",
+      "scopeName": "text.html.markdown",
+      "path": "./syntaxes/tmd.tmLanguage.json"
+    }]
+  }
+}
