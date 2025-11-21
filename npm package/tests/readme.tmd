@@ -1,0 +1,10 @@
+---
+variables:
+  wow: "hey"
+  var2: "hello!"
+---
+
+{{wow}}
+{{wow}}
+{{var2}}
+ssd
