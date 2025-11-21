@@ -20,7 +20,11 @@
         "extensions": [
           ".tmd"
         ],
-        "configuration": "./language-configuration.json"
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./icons/templatemd.svg",
+          "dark": "./icons/templatemd.svg"
+        }
       }
     ],
     "grammars": [
@@ -28,6 +32,13 @@
         "language": "tmd",
         "scopeName": "source.tmd",
         "path": "./syntaxes/tmd.tmLanguage.json"
+      }
+    ],
+    "productIconThemes": [
+      {
+        "id": "id",
+        "label": "label",
+        "path": "./icons/templatemd-icon-theme.json"
       }
     ]
   },

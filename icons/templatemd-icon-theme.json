@@ -1,0 +1,13 @@
+{
+  "iconDefinitions": {
+    "templatemd-icon": {
+      "iconPath": "./templatemd.svg"
+    }
+  },
+  "fileExtensions": {
+    "tmd": "templatemd-icon"
+  },
+  "folderNames": {},
+  "folderNamesExpanded": {},
+  "fileNames": {}
+}
