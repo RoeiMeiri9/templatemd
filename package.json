@@ -3,6 +3,10 @@
   "displayName": "TemplateMD",
   "description": "Enhance Markdowns with templates",
   "version": "0.0.1",
+  "author": {
+    "name": "Roei Meiri"
+  },
+  "icon": "icons/templatemd.png",
   "engines": {
     "vscode": "^1.106.1"
   },
@@ -42,10 +46,10 @@
       }
     ]
   },
-  "main": "./out/extension.js",
   "activationEvents": [
-    "onLanguage:templatemd"
+    "onLanguage:tmd"
   ],
+  "main": "./out/extension.js",
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
@@ -57,11 +61,13 @@
     "type": "github",
     "url": "https://github.com/RoeiMeiri9/templatemd"
   },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^24.10.1",
     "@types/vscode": "^1.106.1",
-    "js-yaml": "^4.1.1",
     "typescript": "^5.9.3",
     "vscode": "^1.1.37"
   }
