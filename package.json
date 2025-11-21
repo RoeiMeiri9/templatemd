@@ -53,6 +53,10 @@
     "pretest": "npm run compile",
     "test": "node ./out/test/runTest.js"
   },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/RoeiMeiri9/templatemd"
+  },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^24.10.1",
