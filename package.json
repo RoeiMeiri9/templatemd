@@ -10,16 +10,41 @@
     "Programming Languages"
   ],
   "contributes": {
-    "languages": [{
-      "id": "tmd",
-      "aliases": ["TemplateMarkdown", "tmd"],
-      "extensions": [".tmd"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "tmd",
-      "scopeName": "text.html.markdown",
-      "path": "./syntaxes/tmd.tmLanguage.json"
-    }]
+    "languages": [
+      {
+        "id": "tmd",
+        "aliases": [
+          "TemplateMarkdown",
+          "tmd"
+        ],
+        "extensions": [
+          ".tmd"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "tmd",
+        "scopeName": "source.tmd",
+        "path": "./syntaxes/tmd.tmLanguage.json"
+      }
+    ]
+  },
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^24.10.1",
+    "@types/vscode": "^1.106.1",
+    "js-yaml": "^4.1.1",
+    "typescript": "^5.9.3",
+    "vscode": "^1.1.37"
   }
 }
