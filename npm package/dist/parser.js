@@ -1,44 +1,71 @@
-import { load } from "js-yaml";
+import { load, dump } from "js-yaml";
 import { readFile as fsReadFile, writeFile as fsWriteFile } from "fs/promises";
-export async function readFile(path) {
+export async function processFile(path, benchmark) {
+    const startTime = benchmark ? Date.now() : 0;
     try {
         const content = await fsReadFile(path, "utf-8");
-        await writeFile(path, parseFile(content));
+        const processed = orchestrator(content);
+        const outPath = path.replace(/\.tmd$/, ".md");
+        await fsWriteFile(outPath, processed, "utf-8");
+        if (benchmark)
+            console.log(Date.now() - startTime);
     }
     catch (err) {
-        console.error("Error reading file:", err);
+        console.error("Error processing file:", err);
     }
 }
-async function writeFile(path, content) {
-    if (!content)
-        return;
-    try {
-        let fileTypeIndex = path.lastIndexOf(".tmd");
-        fsWriteFile(path.substring(0, fileTypeIndex) + ".md", content, "utf-8");
-    }
-    catch (err) {
-        console.error("Error writing to file:", err);
-    }
+function orchestrator(content) {
+    const vars = extractVariables(content);
+    return parseContent(content, vars);
 }
-function parseFile(content) {
-    const fmMatch = content.match(/^---\r\n([\s\S]*?)\r\n---\r\n/);
+function extractVariables(content) {
+    const eolMatch = content.match(/\r\n|\r|\n/);
+    const EOL = eolMatch ? eolMatch[0] : "\n";
+    const fmMatch = content.match(/^---[\r\n]+([\s\S]*?)^---[\r\n]/m);
     if (!fmMatch || !fmMatch[1])
-        return;
-    const fmContent = fmMatch[1];
-    let vars;
+        return { EOL };
+    let fmObject;
     try {
-        vars = load(fmContent);
+        fmObject = load(fmMatch[1]);
     }
     catch {
-        return;
+        return { EOL, fmMatch, newFMContent: fmMatch[1] };
     }
-    if (!vars || !vars.variables)
-        return;
-    vars = vars.variables;
-    let newContent = content;
-    for (let variable of Object.keys(vars)) {
-        newContent = newContent.replaceAll(`{{${variable}}}`, `${vars[variable]}`);
+    const variables = fmObject.variables ? { ...fmObject.variables } : undefined;
+    delete fmObject.variables;
+    const hasOtherKeys = Object.keys(fmObject).length > 0;
+    const newFMContent = hasOtherKeys ? dump(fmObject, { indent: 2 }) : "";
+    return { variables, newFMContent, fmMatch, EOL };
+}
+function parseContent(text, fm) {
+    let out = "";
+    const startIndex = fm.fmMatch ? fm.fmMatch[0].length : 0;
+    let body = text.slice(startIndex + 1);
+    body = body.replace(/^(\r\n|\n\r|\n|\r)/, "");
+    if (fm.newFMContent) {
+        out += `---${fm.EOL}${fm.newFMContent}---${fm.EOL}`;
     }
-    return newContent.replace(fmMatch[0], "");
+    if (!fm.variables) {
+        out += body;
+        return out;
+    }
+    let i = 0;
+    while (i < body.length) {
+        if (body[i] === "{" && body[i + 1] === "{") {
+            i += 2;
+            let varName = "";
+            while (!(body[i] === "}" && body[i + 1] === "}")) {
+                varName += body[i];
+                i++;
+            }
+            i += 2;
+            out += fm.variables[varName.trim()] ?? "";
+        }
+        else {
+            out += body[i];
+            i++;
+        }
+    }
+    return out;
 }
 //# sourceMappingURL=parser.js.map

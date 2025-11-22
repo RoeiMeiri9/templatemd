@@ -1,9 +1,9 @@
 import { FSWatcher, watch } from "chokidar";
-import { readFile } from "./parser.js";
+import { processFile } from "./parser.js";
 
 let watcher: FSWatcher;
 
-export function watchFile(pathToWatch: string) {
+export function watchFile(pathToWatch: string, benchmark: boolean) {
   watcher = watch(pathToWatch, {
     ignored: (filePath, stats) => {
       if (!stats) return false;
@@ -11,7 +11,7 @@ export function watchFile(pathToWatch: string) {
     },
     persistent: true,
   });
-  watcher.on("change", (path) => readFile(path));
+  watcher.on("change", (path) => processFile(path, benchmark));
 }
 
 export async function clear() {

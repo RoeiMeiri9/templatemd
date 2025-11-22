@@ -2,6 +2,7 @@
 variables:
   wow: "hey"
   var2: "hello!"
+
 ---
 
 {{wow}}

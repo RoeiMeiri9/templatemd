@@ -1,2 +1,2 @@
-export declare function readFile(path: string): Promise<void>;
+export declare function processFile(path: string, benchmark: boolean): Promise<void>;
 //# sourceMappingURL=parser.d.ts.map

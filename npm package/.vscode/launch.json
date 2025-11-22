@@ -9,6 +9,15 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "tmd", "--", "--watch", "./tests/readme.tmd"],
       "program": "${workspaceFolder}/your-main-file.js" // Adjust if needed
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Test and print benchmark",
+      "skipFiles": ["<node_internals>/**"],
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "tmd", "--", "-w", "./tests/readme.tmd", "-b"],
+      "program": "${workspaceFolder}/your-main-file.js" // Adjust if needed
     }
   ]
 }

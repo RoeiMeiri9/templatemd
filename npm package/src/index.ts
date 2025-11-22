@@ -11,17 +11,25 @@ async function init() {
       type: "string",
       description: "File or folder to watch",
     })
+    .option("benchmark", {
+      alias: "b",
+      type: "boolean",
+      description: "Prints length of operation in ms",
+    })
     .help("help") // enables --help
     .alias("help", "h").argv; // alias -h
 
-  const path = (await argv).watch;
+  const { watch: path, benchmark } = await argv;
 
   if (!path) {
     throw new Error("No file/folder specified. Use --help for usage.");
   }
+  if (benchmark) {
+    console.log("Benchmark mode enabled — parsing times will be logged.");
+  }
   console.log("Watching:", path);
 
-  watchFile(path);
+  watchFile(path, benchmark ?? false);
   process.stdin.resume();
   process.on("beforeExit", clear);
 }
