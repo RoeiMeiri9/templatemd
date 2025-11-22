@@ -1,12 +1,15 @@
 ---
+author: "Roei Meiri"
+version: "0.0.1"
+date: "22/11/2025"
+
 variables:
   app-name: "TemplateMD"
-  version: "0.0.1"
-  author: "Roei Meiri"
-  date: "22/11/2025"
   mark-down: "Markdown"
   file-type: "`.tmd`"
   markdown-file-type: "`.md`"
+  front-matter: "Front Matter"
+  variables: "`variables`"
 ---
 # {{app-name}}
 This is the parser for {{app-name}}.
@@ -15,18 +18,17 @@ This is the parser for {{app-name}}.
 Working with {{app-name}} is easy - especially if you install the {{app-name}} for Visual Studio Code.
 Just make a new {{file-type}} file, write your {{mark-down}} file as usual, and each time you want to insert a recurring string, write "{{}}" and insert your value inside.
 
-All of the values must be written under `variables` in the `Front Matter`, for example:
+All of the values must be written under {{variables}} in the `{{front-matter}}`, for example:
 
 ```YAML
 ---
 variables:
   app-name: "TemplateMD"
-  version: "0.0.1"
-  author: "Roei Meiri"
-  date: "22/11/2025"
   mark-down: "Markdown"
   file-type: "`.tmd`"
   markdown-file-type: "`.md`"
+  front-matter: "Front Matter"
+  variables: "`variables`"
 ---
 ```
 
@@ -35,12 +37,22 @@ To compile the {{file-type}} file, install the {{app-name}} package using:
 npm install tmd
 ```
 
-And then run:
+> [!Note]
+> The compiler will remove the {{variables}} block, but will keep you with every other metadata that was written there.
+> If the {{front-matter}} contains only {{variables}}, the compiler will remove the {{front-matter}} altogether, leaving you with a clean file.
+
+To run:
 ```
-tmd -- watch path\to\file-or-folder
+tmd -- --watch path\to\file-or-folder
 ```
 
 Then, every time you save your {{file-type}} file, a {{markdown-file-type}} file will be generated next to the original {{file-type}}.
+
+## Features
+
+- Complete {{markdown-file-type}} support (this is an extension of classic {{mark-down}} after all)
+- Use variables in your {{file-type}} file
+- Compile to {{markdown-file-type}} super fast
 
 ## Benchmarks
 More to come, stay tunes :)
@@ -50,8 +62,12 @@ More to come, stay tunes :)
 | < 1mb      | ~0 - 4       |
 | 14mb       | ~451         |
 
+## History
+
+### Ver 1.0.0
+
+Initial release
+
 ## License
 
 This project is license under the ___
-
-## 

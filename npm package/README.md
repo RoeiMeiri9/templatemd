@@ -1,3 +1,8 @@
+---
+author: Roei Meiri
+version: 0.0.1
+date: 22/11/2025
+---
 # TemplateMD
 This is the parser for TemplateMD.
 
@@ -11,12 +16,11 @@ All of the values must be written under `variables` in the `Front Matter`, for e
 ---
 variables:
   app-name: "TemplateMD"
-  version: "0.0.1"
-  author: "Roei Meiri"
-  date: "22/11/2025"
   mark-down: "Markdown"
   file-type: "`.tmd`"
   markdown-file-type: "`.md`"
+  front-matter: "Front Matter"
+  variables: "`variables`"
 ---
 ```
 
@@ -25,12 +29,22 @@ To compile the `.tmd` file, install the TemplateMD package using:
 npm install tmd
 ```
 
-And then run:
+> [!Note]
+> The compiler will remove the `variables` block, but will keep you with every other metadata that was written there.
+> If the Front Matter contains only `variables`, the compiler will remove the Front Matter altogether, leaving you with a clean file.
+
+To run:
 ```
-tmd -- watch path\to\file-or-folder
+tmd -- --watch path\to\file-or-folder
 ```
 
 Then, every time you save your `.tmd` file, a `.md` file will be generated next to the original `.tmd`.
+
+## Features
+
+- Complete `.md` support (this is an extension of classic Markdown after all)
+- Use variables in your `.tmd` file
+- Compile to `.md` super fast
 
 ## Benchmarks
 More to come, stay tunes :)
@@ -40,8 +54,12 @@ More to come, stay tunes :)
 | < 1mb      | ~0 - 4       |
 | 14mb       | ~451         |
 
+## History
+
+### Ver 1.0.0
+
+Initial release
+
 ## License
 
 This project is license under the ___
-
-## 
