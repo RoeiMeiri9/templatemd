@@ -1,0 +1,23 @@
+{
+  "scopeName": "template.injection.tmd",
+  "injectionSelector": "L:text.html.markdown, L:source.tmd",
+  "patterns": [
+    {
+      "name": "meta.template.tmd",
+      "begin": "\\{\\{",
+      "end": "\\}\\}",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.template.begin.tmd" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.template.end.tmd" }
+      },
+      "patterns": [
+        {
+          "name": "variable.other.tmd",
+          "match": "."
+        }
+      ]
+    }
+  ]
+}

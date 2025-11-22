@@ -36,6 +36,14 @@
         "language": "tmd",
         "scopeName": "source.tmd",
         "path": "./syntaxes/tmd.tmLanguage.json"
+      },
+      {
+        "scopeName": "template.injection.tmd",
+        "path": "./syntaxes/tmd.injection.tmLanguage.json",
+        "injectTo": [
+          "text.html.markdown",
+          "source.tmd"
+        ]
       }
     ],
     "productIconThemes": [

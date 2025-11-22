@@ -33,18 +33,35 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.activate = activate;
-exports.deactivate = deactivate;
+exports.TmdDefinitionProvider = void 0;
 const vscode = __importStar(require("vscode"));
-const completion_1 = require("./completion");
-const TmdDefinitionProvide_1 = require("./TmdDefinitionProvide");
-function activate(context) {
-    const provider = vscode.languages.registerCompletionItemProvider("tmd", {
-        provideCompletionItems: completion_1.provideCompletionItems,
-    }, "{" // trigger character
-    );
-    const definitionProvider = vscode.languages.registerDefinitionProvider("tmd", new TmdDefinitionProvide_1.TmdDefinitionProvider());
-    context.subscriptions.push(provider, definitionProvider);
+const tools_1 = require("./tools");
+class TmdDefinitionProvider {
+    provideDefinition(document, position) {
+        const wordRange = document.getWordRangeAtPosition(position, /[\w\-]+/ // adjust if variable names allow more chars
+        );
+        if (!wordRange)
+            return;
+        const word = document.getText(wordRange);
+        const { fmMatch, text } = (0, tools_1.getVariables)(document, position);
+        if (!fmMatch || !text)
+            return;
+        // Find actual line of the variable in the YAML block
+        const frontMatterStart = text.indexOf(fmMatch[0]);
+        const frontMatterText = fmMatch[0].split("\n");
+        let definitionLine = -1;
+        for (let i = 0; i < frontMatterText.length; i++) {
+            if (frontMatterText[i].trim().startsWith(`${word}:`)) {
+                definitionLine = i;
+                break;
+            }
+        }
+        if (definitionLine === -1)
+            return;
+        // Compute absolute line number
+        const realLine = document.positionAt(frontMatterStart).line + definitionLine;
+        return new vscode.Location(document.uri, new vscode.Position(realLine, 0));
+    }
 }
-function deactivate() { }
-//# sourceMappingURL=extension.js.map
+exports.TmdDefinitionProvider = TmdDefinitionProvider;
+//# sourceMappingURL=TmdDefinitionProvide.js.map

@@ -33,18 +33,42 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.activate = activate;
-exports.deactivate = deactivate;
-const vscode = __importStar(require("vscode"));
-const completion_1 = require("./completion");
-const TmdDefinitionProvide_1 = require("./TmdDefinitionProvide");
-function activate(context) {
-    const provider = vscode.languages.registerCompletionItemProvider("tmd", {
-        provideCompletionItems: completion_1.provideCompletionItems,
-    }, "{" // trigger character
-    );
-    const definitionProvider = vscode.languages.registerDefinitionProvider("tmd", new TmdDefinitionProvide_1.TmdDefinitionProvider());
-    context.subscriptions.push(provider, definitionProvider);
+exports.getVariables = getVariables;
+const vscode_1 = require("vscode");
+const yaml = __importStar(require("js-yaml"));
+function getVariables(document, position) {
+    let before = document.getText(new vscode_1.Range(new vscode_1.Position(0, 0), position));
+    before = before.replace(/{{{+/g, "{");
+    const inside = isInsideDoubleBraces(before);
+    if (!inside)
+        return {};
+    const insideText = getTextInsideBraces(before);
+    if (!insideText || insideText.trim().length === 0) {
+        return {};
+    }
+    const text = document.getText();
+    const fmMatch = text.match(/^---\s*\n([\s\S]*?)\n---/);
+    if (!fmMatch)
+        return {};
+    let fmData;
+    try {
+        fmData = yaml.load(fmMatch[1]);
+    }
+    catch {
+        return {};
+    }
+    return { variables: fmData.variables, fmMatch, text };
 }
-function deactivate() { }
-//# sourceMappingURL=extension.js.map
+function isInsideDoubleBraces(textBeforeCursor) {
+    const lastOpen = textBeforeCursor.lastIndexOf("{{");
+    const lastClose = textBeforeCursor.lastIndexOf("}}");
+    return lastOpen !== -1 && lastOpen > lastClose;
+}
+function getTextInsideBraces(before) {
+    const lastOpen = before.lastIndexOf("{{");
+    const lastClose = before.lastIndexOf("}}");
+    if (lastOpen === -1 || lastOpen < lastClose)
+        return null;
+    return before.slice(lastOpen + 2); // מה שאחרי {{
+}
+//# sourceMappingURL=tools.js.map

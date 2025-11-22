@@ -1,24 +1,6 @@
 {
   "scopeName": "source.tmd",
   "name": "TMD",
-  "patterns": [{ "include": "#template" }, { "include": "text.html.markdown" }],
-  "repository": {
-    "template": {
-      "name": "meta.template.tmd",
-      "begin": "\\{\\{",
-      "beginCaptures": {
-        "0": { "name": "punctuation.definition.template.tmd" }
-      },
-      "end": "\\}\\}",
-      "endCaptures": {
-        "0": { "name": "punctuation.definition.template.tmd" }
-      },
-      "patterns": [
-        {
-          "name": "variable.other.tmd",
-          "match": "[^\\}]+"
-        }
-      ]
-    }
-  }
+  "patterns": [{ "include": "text.html.markdown" }, { "include": "#template" }],
+  "injectionSelector": "L:text.html.markdown, L:source.tmd"
 }
