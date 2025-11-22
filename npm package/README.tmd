@@ -33,8 +33,9 @@ variables:
 ```
 
 To compile the {{file-type}} file, install the {{app-name}} package using:
-```POWERSHELL
-npm install tmd
+
+```BASH
+$ npm install tmd
 ```
 
 > [!Note]
@@ -42,8 +43,9 @@ npm install tmd
 > If the {{front-matter}} contains only {{variables}}, the compiler will remove the {{front-matter}} altogether, leaving you with a clean file.
 
 To run:
-```
-tmd -- --watch path\to\file-or-folder
+
+```BASH
+$ tmd -- --watch path\to\file-or-folder
 ```
 
 Then, every time you save your {{file-type}} file, a {{markdown-file-type}} file will be generated next to the original {{file-type}}.

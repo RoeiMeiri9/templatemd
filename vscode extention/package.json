@@ -19,6 +19,8 @@
         "id": "tmd",
         "aliases": [
           "TemplateMarkdown",
+          "TemplateMD",
+          "TMD",
           "tmd"
         ],
         "extensions": [
@@ -52,7 +54,13 @@
         "label": "label",
         "path": "./icons/templatemd-icon-theme.json"
       }
-    ]
+    ],
+    "configurationDefaults": {
+      "[tmd]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+      }
+    }
   },
   "activationEvents": [
     "onLanguage:tmd"

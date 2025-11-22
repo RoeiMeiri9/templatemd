@@ -3,13 +3,10 @@ author: Roei Meiri
 version: 0.0.1
 date: 22/11/2025
 ---
-
 # TemplateMD
-
 This is the parser for TemplateMD.
 
 ## How to work with TemplateMD
-
 Working with TemplateMD is easy - especially if you install the TemplateMD for Visual Studio Code.
 Just make a new `.tmd` file, write your Markdown file as usual, and each time you want to insert a recurring string, write "" and insert your value inside.
 
@@ -52,13 +49,12 @@ Then, every time you save your `.tmd` file, a `.md` file will be generated next 
 - Compile to `.md` super fast
 
 ## Benchmarks
-
 More to come, stay tunes :)
 
-| File Size | Time (in ms) |
-| --------- | ------------ |
-| < 1mb     | ~0 - 4       |
-| 14mb      | ~451         |
+| File Size  | Time (in ms) |
+| ---------- | ------------ |
+| < 1mb      | ~0 - 4       |
+| 14mb       | ~451         |
 
 ## History
 
@@ -68,4 +64,4 @@ Initial release
 
 ## License
 
-This project is license under the \_\_\_
+This project is license under the ___
