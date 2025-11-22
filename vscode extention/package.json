@@ -54,13 +54,7 @@
         "label": "label",
         "path": "./icons/templatemd-icon-theme.json"
       }
-    ],
-    "configurationDefaults": {
-      "[tmd]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.formatOnSave": true
-      }
-    }
+    ]
   },
   "activationEvents": [
     "onLanguage:tmd"
@@ -78,7 +72,8 @@
     "url": "https://github.com/RoeiMeiri9/templatemd"
   },
   "dependencies": {
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.1.0",
+    "prettier": "^3.6.2"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",

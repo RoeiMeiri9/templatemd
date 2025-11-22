@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { provideCompletionItems } from "./completion";
 import { TmdDefinitionProvider } from "./TmdDefinitionProvide";
+import { provideDocumentFormattingEdits } from "./formatter";
 
 export function activate(context: vscode.ExtensionContext) {
   const provider = vscode.languages.registerCompletionItemProvider(
@@ -8,8 +9,12 @@ export function activate(context: vscode.ExtensionContext) {
     {
       provideCompletionItems,
     },
-    "{" // trigger character
+    "{"
   );
+
+  vscode.languages.registerDocumentFormattingEditProvider("tmd", {
+    provideDocumentFormattingEdits,
+  });
 
   const definitionProvider = vscode.languages.registerDefinitionProvider(
     "tmd",

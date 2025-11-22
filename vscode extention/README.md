@@ -1,4 +1,4 @@
-# <img src="./icons/templatemd.svg" width="60"/> TemplateMD
+# TemplateMD
 
 Write Markdown with Template.\
 This is the official syntax highlighting support for TemplateMD.
@@ -32,20 +32,7 @@ For more detailed explanation, visit [the official github page](https://github.c
 
 If you want to prettifying a `.tmd` file, you need to choose prettier as your default prettifier (you can download it from here: [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode))
 
-and then add the following settings in a `.prettierrc` file in your project:
-
-```JSON
-{
-  "overrides": [
-    {
-      "files": "*.tmd",
-      "options": {
-        "parser": "markdown"
-      }
-    }
-  ]
-}
-```
+Then just prettify the `.tmd` file as usual.
 
 ## Release Notes
 

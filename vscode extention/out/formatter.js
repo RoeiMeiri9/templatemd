@@ -32,22 +32,22 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.activate = activate;
-exports.deactivate = deactivate;
+exports.provideDocumentFormattingEdits = provideDocumentFormattingEdits;
 const vscode = __importStar(require("vscode"));
-const completion_1 = require("./completion");
-const TmdDefinitionProvide_1 = require("./TmdDefinitionProvide");
-const formatter_1 = require("./formatter");
-function activate(context) {
-    const provider = vscode.languages.registerCompletionItemProvider("tmd", {
-        provideCompletionItems: completion_1.provideCompletionItems,
-    }, "{");
-    vscode.languages.registerDocumentFormattingEditProvider("tmd", {
-        provideDocumentFormattingEdits: formatter_1.provideDocumentFormattingEdits,
-    });
-    const definitionProvider = vscode.languages.registerDefinitionProvider("tmd", new TmdDefinitionProvide_1.TmdDefinitionProvider());
-    context.subscriptions.push(provider, definitionProvider);
+const prettier_1 = __importDefault(require("prettier"));
+async function execPrettier(text) {
+    return await prettier_1.default.format(text, { parser: "markdown" });
 }
-function deactivate() { }
-//# sourceMappingURL=extension.js.map
+async function provideDocumentFormattingEdits(document) {
+    const text = document.getText();
+    const formatted = await execPrettier(text);
+    return [vscode.TextEdit.replace(fullRange(document), formatted)];
+}
+function fullRange(doc) {
+    return new vscode.Range(doc.positionAt(0), doc.positionAt(doc.getText().length));
+}
+//# sourceMappingURL=formatter.js.map
