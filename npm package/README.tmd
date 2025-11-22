@@ -33,7 +33,7 @@ variables:
 ```
 
 To compile the {{file-type}} file, install the {{app-name}} package using:
-```CLI
+```POWERSHELL
 npm install tmd
 ```
 
