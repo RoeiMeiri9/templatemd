@@ -6,6 +6,7 @@
   "author": {
     "name": "Roei Meiri"
   },
+  "license": "MIT",
   "icon": "icons/templatemd.png",
   "engines": {
     "vscode": "^1.106.1"
