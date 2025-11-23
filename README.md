@@ -21,4 +21,3 @@ Initial release of TemplateMD
 ## License
 
 This project is licensed under the [MIT License](./vscode%20extention/LICENSE).
-See the LICENSE file for details.
