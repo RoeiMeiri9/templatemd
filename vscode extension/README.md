@@ -26,7 +26,7 @@ For more detailed explanation, visit [the official github page](https://github.c
 - Write Markdown files with variables
 - IntelliSense support
 
-![Intellisense in action](https://raw.githubusercontent.com/RoeiMeiri9/templatemd/refs/heads/master/vscode%20extention/branding/tmd.gif)
+![Intellisense in action](https://raw.githubusercontent.com/RoeiMeiri9/templatemd/refs/heads/master/vscode%20extension/branding/tmd.gif)
 
 ## Prettifying
 

@@ -10,7 +10,7 @@ To work with the syntax, you must install first the TemplateMD package from npm,
 - Write Markdown files with variables
 - IntelliSense support
 
-![Intellisense in action](https://github.com/RoeiMeiri9/templatemd/blob/master/vscode%20extention/branding/tmd.gif)
+![Intellisense in action](https://github.com/RoeiMeiri9/templatemd/blob/master/vscode%20extension/branding/tmd.gif)
 
 ## Release Notes
 
@@ -20,4 +20,4 @@ Initial release of TemplateMD
 
 ## License
 
-This project is licensed under the [MIT License](./vscode%20extention/LICENSE).
+This project is licensed under the [MIT License](./vscode%20extension/LICENSE).
