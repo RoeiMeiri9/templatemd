@@ -1,6 +1,6 @@
 {
   "scopeName": "source.tmd",
   "name": "TMD",
-  "patterns": [{ "include": "text.html.markdown" }, { "include": "#template" }],
-  "injectionSelector": "L:text.html.markdown, L:source.tmd"
+  "injectionSelector": "L:text.html.markdown, L:source.tmd",
+  "patterns": [{ "include": "text.html.markdown" }, { "include": "#template" }]
 }

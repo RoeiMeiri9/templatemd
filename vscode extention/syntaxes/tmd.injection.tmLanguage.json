@@ -20,15 +20,6 @@
       ]
     },
     {
-      "name": "single.backslash",
-      "patterns": [
-        {
-          "name": "invalid.illegal.tmd",
-          "match": "(?<!\\\\)\\\\(?![\\\\`*_{}\\[\\]()#+\\.!|<>\\/&$~^=:nrst-])"
-        }
-      ]
-    },
-    {
       "name": "allowed.backslash",
       "patterns": [
         {

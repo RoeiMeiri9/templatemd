@@ -39,7 +39,7 @@ const vscode = __importStar(require("vscode"));
 const completion_1 = require("./completion");
 const TmdDefinitionProvide_1 = require("./TmdDefinitionProvide");
 const formatter_1 = require("./formatter");
-const errors_1 = require("./errors");
+const checkers_1 = require("./checkers");
 const tools_1 = require("./tools");
 const TmdRenameProvider_1 = require("./TmdRenameProvider");
 function activate(context) {
@@ -63,10 +63,10 @@ function activate(context) {
         if (document.languageId !== "tmd")
             return;
         const text = document.getText();
-        diagnostics.push(...(0, errors_1.checkIllegalRegex)(text, document));
+        diagnostics.push(...(0, checkers_1.checkIllegalRegex)(document));
         const { fmData } = (0, tools_1.getVariables)(document);
         if (fmData?.variables) {
-            diagnostics.push(...(0, errors_1.checkUnrecognizedVariable)(text, document, fmData.variables));
+            diagnostics.push(...(0, checkers_1.checkUnrecognizedVariable)(text, document, fmData.variables));
         }
         collections.set(document.uri, diagnostics);
     }
