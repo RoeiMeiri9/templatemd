@@ -41,6 +41,7 @@ const TmdDefinitionProvide_1 = require("./TmdDefinitionProvide");
 const formatter_1 = require("./formatter");
 const errors_1 = require("./errors");
 const tools_1 = require("./tools");
+const TmdRenameProvider_1 = require("./TmdRenameProvider");
 function activate(context) {
     const fileType = "tmd";
     const collections = vscode.languages.createDiagnosticCollection("tmd");
@@ -51,11 +52,12 @@ function activate(context) {
         provideDocumentFormattingEdits: formatter_1.provideDocumentFormattingEdits,
     });
     const definitionProvider = vscode.languages.registerDefinitionProvider(fileType, new TmdDefinitionProvide_1.TmdDefinitionProvider());
+    const renameProvider = vscode.languages.registerRenameProvider("tmd", new TmdRenameProvider_1.TmdRenameProvider());
     vscode.workspace.textDocuments.forEach(check);
     const onNewOpenedDocument = vscode.workspace.onDidOpenTextDocument(check);
     const onChangedDocument = vscode.workspace.onDidChangeTextDocument((e) => check(e.document));
     const onClosed = vscode.workspace.onDidCloseTextDocument((doc) => collections.delete(doc.uri));
-    context.subscriptions.push(provider, definitionProvider, collections, onNewOpenedDocument, onChangedDocument, onClosed);
+    context.subscriptions.push(provider, definitionProvider, collections, onNewOpenedDocument, onChangedDocument, renameProvider, onClosed);
     function check(document) {
         let diagnostics = [];
         if (document.languageId !== "tmd")

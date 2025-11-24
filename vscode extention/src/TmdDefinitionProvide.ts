@@ -1,5 +1,4 @@
 import * as vscode from "vscode";
-import * as yaml from "js-yaml";
 import { getVariablesForBraces } from "./tools";
 
 export class TmdDefinitionProvider implements vscode.DefinitionProvider {

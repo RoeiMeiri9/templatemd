@@ -4,6 +4,7 @@ import { TmdDefinitionProvider } from "./TmdDefinitionProvide";
 import { provideDocumentFormattingEdits } from "./formatter";
 import { checkIllegalRegex, checkUnrecognizedVariable } from "./errors";
 import { getVariables } from "./tools";
+import { TmdRenameProvider } from "./TmdRenameProvider";
 
 export function activate(context: vscode.ExtensionContext) {
   const fileType = "tmd";
@@ -26,6 +27,11 @@ export function activate(context: vscode.ExtensionContext) {
     new TmdDefinitionProvider()
   );
 
+  const renameProvider = vscode.languages.registerRenameProvider(
+    "tmd",
+    new TmdRenameProvider()
+  );
+
   vscode.workspace.textDocuments.forEach(check);
 
   const onNewOpenedDocument = vscode.workspace.onDidOpenTextDocument(check);
@@ -44,6 +50,7 @@ export function activate(context: vscode.ExtensionContext) {
     collections,
     onNewOpenedDocument,
     onChangedDocument,
+    renameProvider,
     onClosed
   );
 
