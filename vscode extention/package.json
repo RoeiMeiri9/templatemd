@@ -49,11 +49,11 @@
         ]
       }
     ],
-    "productIconThemes": [
+    "fileIconThemes": [
       {
-        "id": "id",
-        "label": "label",
-        "path": "./icons/templatemd-icon-theme.json"
+        "id": "templatemd-icons",
+        "label": "TemplateMD File Icon",
+        "path": "./icons/theme.json"
       }
     ]
   },

@@ -1,0 +1,12 @@
+{
+  "iconDefinitions": {
+    "tmd-file": {
+      "iconPath": "./tmd.svg"
+    }
+  },
+  "fileExtensions": {
+    "tmd": "tmd-file"
+  },
+  "light": {},
+  "dark": {}
+}
