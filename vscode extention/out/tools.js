@@ -33,42 +33,40 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getVariablesForBraces = getVariablesForBraces;
 exports.getVariables = getVariables;
 const vscode_1 = require("vscode");
 const yaml = __importStar(require("js-yaml"));
-function getVariables(document, position) {
+function getVariablesForBraces(document, position) {
     let before = document.getText(new vscode_1.Range(new vscode_1.Position(0, 0), position));
     before = before.replace(/{{{+/g, "{");
-    const inside = isInsideDoubleBraces(before);
-    if (!inside)
-        return {};
-    const insideText = getTextInsideBraces(before);
+    const insideText = isInsideDoubleBraces(before);
     if (!insideText || insideText.trim().length === 0) {
         return {};
     }
+    const { fmData, fmMatch, text } = getVariables(document);
+    return { variables: fmData.variables, fmMatch, text };
+}
+function getVariables(document) {
     const text = document.getText();
     const fmMatch = text.match(/^---\s*\n([\s\S]*?)\n---/);
     if (!fmMatch)
-        return {};
+        return { fmData: undefined, fmMatch: null, text };
     let fmData;
     try {
         fmData = yaml.load(fmMatch[1]);
     }
     catch {
-        return {};
+        return { fmData, fmMatch, text };
     }
-    return { variables: fmData.variables, fmMatch, text };
+    return { fmData, fmMatch, text };
 }
 function isInsideDoubleBraces(textBeforeCursor) {
     const lastOpen = textBeforeCursor.lastIndexOf("{{");
     const lastClose = textBeforeCursor.lastIndexOf("}}");
-    return lastOpen !== -1 && lastOpen > lastClose;
-}
-function getTextInsideBraces(before) {
-    const lastOpen = before.lastIndexOf("{{");
-    const lastClose = before.lastIndexOf("}}");
-    if (lastOpen === -1 || lastOpen < lastClose)
-        return null;
-    return before.slice(lastOpen + 2); // מה שאחרי {{
+    if (lastOpen !== -1 && lastOpen > lastClose) {
+        return textBeforeCursor.slice(lastOpen + 2);
+    }
+    return "";
 }
 //# sourceMappingURL=tools.js.map

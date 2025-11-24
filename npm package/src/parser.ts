@@ -8,7 +8,7 @@ export async function processFile(path: string, benchmark: boolean) {
   try {
     const content = await fsReadFile(path, "utf-8");
 
-    const processed = orchestrator(content);
+    const processed = await orchestrator(content);
 
     const outPath = path.replace(/\.tmd$/, ".md");
     await fsWriteFile(outPath, processed, "utf-8");
@@ -19,12 +19,12 @@ export async function processFile(path: string, benchmark: boolean) {
   }
 }
 
-function orchestrator(content: string): string {
-  const vars = extractVariables(content);
+async function orchestrator(content: string): Promise<string> {
+  const vars = await extractVariables(content);
   return parseContent(content, vars);
 }
 
-function extractVariables(content: string): VariablesMatcher {
+async function extractVariables(content: string): Promise<VariablesMatcher> {
   const eolMatch = content.match(/\r\n|\r|\n/);
   const EOL = eolMatch ? eolMatch[0] : "\n";
 
@@ -33,8 +33,9 @@ function extractVariables(content: string): VariablesMatcher {
 
   let fmObject: FMContent;
   try {
-    fmObject = load(fmMatch[1]) as FMContent;
-  } catch {
+    fmObject = (await load(fmMatch[1])) as FMContent;
+  } catch (err) {
+    console.log("Error parsing file:", err);
     return { EOL, fmMatch, newFMContent: fmMatch[1] };
   }
 

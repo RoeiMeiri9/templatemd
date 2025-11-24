@@ -18,6 +18,24 @@
           "match": "."
         }
       ]
+    },
+    {
+      "name": "single.backslash",
+      "patterns": [
+        {
+          "name": "invalid.illegal.tmd",
+          "match": "(?<!\\\\)\\\\(?![\\\\`*_{}\\[\\]()#+\\.!|<>\\/&$~^=:nrst-])"
+        }
+      ]
+    },
+    {
+      "name": "allowed.backslash",
+      "patterns": [
+        {
+          "name": "constant.character.escape.tmd",
+          "match": "(?<!\\\\)\\\\[\\\\`*_{}\\[\\]()#+.!|<>\\/&$~^=:nrst-]"
+        }
+      ]
     }
   ]
 }

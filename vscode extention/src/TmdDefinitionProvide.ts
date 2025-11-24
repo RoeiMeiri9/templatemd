@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import * as yaml from "js-yaml";
-import { getVariables } from "./tools";
+import { getVariablesForBraces } from "./tools";
 
 export class TmdDefinitionProvider implements vscode.DefinitionProvider {
   provideDefinition(
@@ -15,7 +15,7 @@ export class TmdDefinitionProvider implements vscode.DefinitionProvider {
 
     const word = document.getText(wordRange);
 
-    const { fmMatch, text } = getVariables(document, position);
+    const { fmMatch, text } = getVariablesForBraces(document, position);
 
     if (!fmMatch || !text) return;
 

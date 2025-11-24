@@ -39,15 +39,35 @@ const vscode = __importStar(require("vscode"));
 const completion_1 = require("./completion");
 const TmdDefinitionProvide_1 = require("./TmdDefinitionProvide");
 const formatter_1 = require("./formatter");
+const errors_1 = require("./errors");
+const tools_1 = require("./tools");
 function activate(context) {
-    const provider = vscode.languages.registerCompletionItemProvider("tmd", {
+    const fileType = "tmd";
+    const collections = vscode.languages.createDiagnosticCollection("tmd");
+    const provider = vscode.languages.registerCompletionItemProvider(fileType, {
         provideCompletionItems: completion_1.provideCompletionItems,
     }, "{");
-    vscode.languages.registerDocumentFormattingEditProvider("tmd", {
+    vscode.languages.registerDocumentFormattingEditProvider(fileType, {
         provideDocumentFormattingEdits: formatter_1.provideDocumentFormattingEdits,
     });
-    const definitionProvider = vscode.languages.registerDefinitionProvider("tmd", new TmdDefinitionProvide_1.TmdDefinitionProvider());
-    context.subscriptions.push(provider, definitionProvider);
+    const definitionProvider = vscode.languages.registerDefinitionProvider(fileType, new TmdDefinitionProvide_1.TmdDefinitionProvider());
+    vscode.workspace.textDocuments.forEach(check);
+    const onNewOpenedDocument = vscode.workspace.onDidOpenTextDocument(check);
+    const onChangedDocument = vscode.workspace.onDidChangeTextDocument((e) => check(e.document));
+    const onClosed = vscode.workspace.onDidCloseTextDocument((doc) => collections.delete(doc.uri));
+    context.subscriptions.push(provider, definitionProvider, collections, onNewOpenedDocument, onChangedDocument, onClosed);
+    function check(document) {
+        let diagnostics = [];
+        if (document.languageId !== "tmd")
+            return;
+        const text = document.getText();
+        diagnostics.push(...(0, errors_1.checkIllegalRegex)(text, document));
+        const { fmData } = (0, tools_1.getVariables)(document);
+        if (fmData?.variables) {
+            diagnostics.push(...(0, errors_1.checkUnrecognizedVariable)(text, document, fmData.variables));
+        }
+        collections.set(document.uri, diagnostics);
+    }
 }
 function deactivate() { }
 //# sourceMappingURL=extension.js.map

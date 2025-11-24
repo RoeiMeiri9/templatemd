@@ -43,7 +43,7 @@ class TmdDefinitionProvider {
         if (!wordRange)
             return;
         const word = document.getText(wordRange);
-        const { fmMatch, text } = (0, tools_1.getVariables)(document, position);
+        const { fmMatch, text } = (0, tools_1.getVariablesForBraces)(document, position);
         if (!fmMatch || !text)
             return;
         // Find actual line of the variable in the YAML block
