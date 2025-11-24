@@ -42,6 +42,8 @@ const formatter_1 = require("./formatter");
 const checkers_1 = require("./checkers");
 const tools_1 = require("./tools");
 const TmdRenameProvider_1 = require("./TmdRenameProvider");
+const TmdQuoteFixProvider_1 = require("./TmdQuoteFixProvider");
+const commands_1 = require("./commands");
 function activate(context) {
     const fileType = "tmd";
     const collections = vscode.languages.createDiagnosticCollection("tmd");
@@ -57,7 +59,11 @@ function activate(context) {
     const onNewOpenedDocument = vscode.workspace.onDidOpenTextDocument(check);
     const onChangedDocument = vscode.workspace.onDidChangeTextDocument((e) => check(e.document));
     const onClosed = vscode.workspace.onDidCloseTextDocument((doc) => collections.delete(doc.uri));
-    context.subscriptions.push(provider, definitionProvider, collections, onNewOpenedDocument, onChangedDocument, renameProvider, onClosed);
+    const quoteFixProvider = vscode.languages.registerCodeActionsProvider("tmd", new TmdQuoteFixProvider_1.TmdQuoteFixProvider(), {
+        providedCodeActionKinds: TmdQuoteFixProvider_1.TmdQuoteFixProvider.providedCodeActionKinds,
+    });
+    context.subscriptions.push(vscode.commands.registerCommand("tmd.fixQuotes", commands_1.fixQuotes));
+    context.subscriptions.push(provider, definitionProvider, collections, onNewOpenedDocument, onChangedDocument, renameProvider, onClosed, quoteFixProvider);
     function check(document) {
         let diagnostics = [];
         if (document.languageId !== "tmd")

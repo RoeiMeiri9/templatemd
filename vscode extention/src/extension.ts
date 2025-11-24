@@ -5,6 +5,8 @@ import { provideDocumentFormattingEdits } from "./formatter";
 import { checkUnrecognizedVariable } from "./checkers";
 import { getVariables } from "./tools";
 import { TmdRenameProvider } from "./TmdRenameProvider";
+import { TmdQuoteFixProvider } from "./TmdQuoteFixProvider";
+import { fixQuotes } from "./commands";
 
 export function activate(context: vscode.ExtensionContext) {
   const fileType = "tmd";
@@ -44,6 +46,18 @@ export function activate(context: vscode.ExtensionContext) {
     collections.delete(doc.uri)
   );
 
+  const quoteFixProvider = vscode.languages.registerCodeActionsProvider(
+    "tmd",
+    new TmdQuoteFixProvider(),
+    {
+      providedCodeActionKinds: TmdQuoteFixProvider.providedCodeActionKinds,
+    }
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("tmd.fixQuotes", fixQuotes)
+  );
+
   context.subscriptions.push(
     provider,
     definitionProvider,
@@ -51,7 +65,8 @@ export function activate(context: vscode.ExtensionContext) {
     onNewOpenedDocument,
     onChangedDocument,
     renameProvider,
-    onClosed
+    onClosed,
+    quoteFixProvider
   );
 
   function check(document: vscode.TextDocument) {
