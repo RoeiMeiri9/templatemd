@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import { provideCompletionItems } from "./completion";
 import { TmdDefinitionProvider } from "./TmdDefinitionProvide";
 import { provideDocumentFormattingEdits } from "./formatter";
-import { checkIllegalRegex, checkUnrecognizedVariable } from "./checkers";
+import { checkUnrecognizedVariable } from "./checkers";
 import { getVariables } from "./tools";
 import { TmdRenameProvider } from "./TmdRenameProvider";
 
@@ -59,8 +59,6 @@ export function activate(context: vscode.ExtensionContext) {
     if (document.languageId !== "tmd") return;
 
     const text = document.getText();
-
-    diagnostics.push(...checkIllegalRegex(document));
 
     const { fmData } = getVariables(document);
     if (fmData?.variables) {

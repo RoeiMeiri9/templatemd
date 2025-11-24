@@ -1,32 +1,4 @@
 import * as vscode from "vscode";
-import { getVariables } from "./tools";
-
-export function checkIllegalRegex(document: vscode.TextDocument) {
-  const regex = /(?<!\\)\\(?![\\`*_{}\[\]()#+\-.!|<>\/&$~^=:nrst])/g;
-  const diagnostics: vscode.Diagnostic[] = [];
-
-  const msg =
-    "Invalid backslash escape sequence.\nValid options: \\\\ \\` \\* \\_ \\{ \\} \\[ \\] \\( \\) \\# \\+ \\- \\. \\! \\| \\n \\r \\t";
-
-  const { fmMatch } = getVariables(document);
-
-  if (!fmMatch) return diagnostics;
-
-  for (const match of fmMatch?.[0].matchAll(regex)) {
-    const start = document.positionAt(match.index);
-    const end = document.positionAt(match.index + match[0].length);
-
-    diagnostics.push(
-      new vscode.Diagnostic(
-        new vscode.Range(start, end),
-        msg,
-        vscode.DiagnosticSeverity.Error
-      )
-    );
-  }
-
-  return diagnostics;
-}
 
 export function checkUnrecognizedVariable(
   text: string,

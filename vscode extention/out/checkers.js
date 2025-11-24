@@ -33,24 +33,8 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkIllegalRegex = checkIllegalRegex;
 exports.checkUnrecognizedVariable = checkUnrecognizedVariable;
 const vscode = __importStar(require("vscode"));
-const tools_1 = require("./tools");
-function checkIllegalRegex(document) {
-    const regex = /(?<!\\)\\(?![\\`*_{}\[\]()#+\-.!|<>\/&$~^=:nrst])/g;
-    const diagnostics = [];
-    const msg = "Invalid backslash escape sequence.\nValid options: \\\\ \\` \\* \\_ \\{ \\} \\[ \\] \\( \\) \\# \\+ \\- \\. \\! \\| \\n \\r \\t";
-    const { fmMatch } = (0, tools_1.getVariables)(document);
-    if (!fmMatch)
-        return diagnostics;
-    for (const match of fmMatch?.[0].matchAll(regex)) {
-        const start = document.positionAt(match.index);
-        const end = document.positionAt(match.index + match[0].length);
-        diagnostics.push(new vscode.Diagnostic(new vscode.Range(start, end), msg, vscode.DiagnosticSeverity.Error));
-    }
-    return diagnostics;
-}
 function checkUnrecognizedVariable(text, document, variables) {
     const regex = /\{\{\s?(\S+)\s?\}\}/g;
     const diagnostics = [];

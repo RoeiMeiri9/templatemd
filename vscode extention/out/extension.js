@@ -63,7 +63,6 @@ function activate(context) {
         if (document.languageId !== "tmd")
             return;
         const text = document.getText();
-        diagnostics.push(...(0, checkers_1.checkIllegalRegex)(document));
         const { fmData } = (0, tools_1.getVariables)(document);
         if (fmData?.variables) {
             diagnostics.push(...(0, checkers_1.checkUnrecognizedVariable)(text, document, fmData.variables));
