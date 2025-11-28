@@ -3,7 +3,6 @@ author: Roei Meiri
 version: 0.0.1
 date: 22/11/2025
 ---
-
 # TemplateMD
 
 This is the parser for TemplateMD.
@@ -40,7 +39,7 @@ $ npm install tmd
 To run:
 
 ```BASH
-$ tmd -- --watch path\to\file-or-folder
+$ tmd --watch path\to\file-or-folder
 ```
 
 Then, every time you save your `.tmd` file, a `.md` file will be generated next to the original `.tmd`.
@@ -68,4 +67,4 @@ Initial release
 
 ## License
 
-This project is licensed under the [MIT License](./LICENSE).
+This project is license under the \_\_\_

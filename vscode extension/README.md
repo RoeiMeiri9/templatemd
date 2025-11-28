@@ -16,7 +16,7 @@ $ npm install tmd
 then ran:
 
 ```BASH
-$ tmd -- --watch path/to/your/file-or-folder
+$ tmd --watch path/to/your/file-or-folder
 ```
 
 For more detailed explanation, visit [the official github page](https://github.com/RoeiMeiri9/templatemd/tree/master/npm%20package)
