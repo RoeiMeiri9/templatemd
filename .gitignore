@@ -1,4 +1,4 @@
-node_modules/
+node_modules
 *.vsix
 .env
 npm package/dist
