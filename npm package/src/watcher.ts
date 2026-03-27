@@ -3,7 +3,7 @@ import { processFile } from "./parser.js";
 
 let watcher: FSWatcher;
 
-export function watchFile(pathToWatch: string, benchmark: boolean) {
+export function watchFile(pathToWatch: string) {
   watcher = watch(pathToWatch, {
     ignored: (filePath, stats) => {
       if (!stats) return false;
