@@ -3,7 +3,6 @@ import { readFile as fsReadFile, writeFile as fsWriteFile } from "fs/promises";
 import type {
   VariablesMatcher,
   FMContent,
-  Status,
   OrchestratorOutput,
 } from "./types.js";
 import { Logger } from "./utils/logger.js";
