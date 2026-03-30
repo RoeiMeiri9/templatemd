@@ -1,5 +1,5 @@
 node_modules
 *.vsix
 .env
-npm package/dist
-vscode extension/out
+dist
+out
