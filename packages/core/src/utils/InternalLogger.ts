@@ -32,7 +32,7 @@ export class InternalLogger {
   }
 
   info(msg: string, ...args: any[]) {
-    this.api.info(`[INFO]`, msg, ...args);
+    this.api.info(msg, ...args);
   }
 
   reportCompilation(path: string, durationNanos: bigint, status: Status) {
@@ -45,13 +45,7 @@ export class InternalLogger {
   }
 
   yamlException(err: YAMLException) {
-    this.api.error(
-      `[ERROR] Parsing failed:`,
-      os.EOL,
-      err.reason,
-      os.EOL,
-      err.stack,
-    );
+    this.api.error("Parsing failed:", os.EOL, err.reason, os.EOL, err.stack);
   }
 }
 

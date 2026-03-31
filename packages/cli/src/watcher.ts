@@ -1,5 +1,6 @@
 import { FSWatcher, watch } from "chokidar";
 import { processFile } from "@emd/core";
+import { Logger } from "./utils/logger.js";
 
 let watcher: FSWatcher;
 
@@ -15,5 +16,5 @@ export function watchFile(pathToWatch: string) {
 }
 
 export async function clear() {
-  await watcher.close().then(() => console.log("closed"));
+  await watcher.close().then(() => Logger.info("closed"));
 }

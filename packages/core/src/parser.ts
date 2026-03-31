@@ -6,6 +6,7 @@ import type {
   OrchestratorOutput,
 } from "./types.js";
 import { logger } from "./utils/logger.js";
+import { normalizedPath } from "./utils/utils.js";
 
 export async function processFile(path: string) {
   const startTime = process.hrtime.bigint();
@@ -20,7 +21,7 @@ export async function processFile(path: string) {
     const time = endTime - startTime;
 
     await fsWriteFile(outPath, processed.content, "utf-8");
-    logger.reportCompilation(path, time, processed.status);
+    logger.reportCompilation(normalizedPath(path), time, processed.status);
   } catch (err) {
     logger.error("Error processing file:", err);
   }

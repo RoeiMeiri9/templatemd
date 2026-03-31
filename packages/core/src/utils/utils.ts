@@ -11,3 +11,7 @@ export function formatHrTime(nanos: bigint): string {
   const seconds = (ms / 1000).toFixed(2);
   return `${seconds}s`;
 }
+
+export function normalizedPath(path: string) {
+  return path.replace(/\\/g, "/");
+}
