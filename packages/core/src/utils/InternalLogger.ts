@@ -3,12 +3,32 @@ import os from "os";
 import type { Status, EmdLogger } from "../types.js";
 
 export class InternalLogger {
-  api!: EmdLogger;
+  private _api?: EmdLogger;
+  public api: EmdLogger;
 
-  constructor() {}
+  constructor() {
+    this.api = new Proxy({} as EmdLogger, {
+      get: (target, prop: keyof EmdLogger) => {
+        if (!this._api) {
+          console.warn(
+            `[InternalLogger]: API not set! Tried to call "${prop}".`,
+          );
+          return () => {};
+        }
+
+        const value = this._api[prop];
+
+        if (typeof value === "function") {
+          return value.bind(this._api);
+        }
+
+        return value;
+      },
+    });
+  }
 
   setAPI(loggerAPI: EmdLogger) {
-    this.api = loggerAPI;
+    this._api = loggerAPI;
   }
 
   info(msg: string, ...args: any[]) {
@@ -21,7 +41,7 @@ export class InternalLogger {
   }
 
   error(...args: any[]) {
-    this.api.error(args);
+    this.api.error(...args);
   }
 
   yamlException(err: YAMLException) {
