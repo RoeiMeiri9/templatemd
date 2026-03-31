@@ -1,1 +1,0 @@
-{"root":["./src/emddefinitionprovide.ts","./src/emdquotefixprovider.ts","./src/emdrenameprovider.ts","./src/checkers.ts","./src/commands.ts","./src/completion.ts","./src/extension.ts","./src/formatter.ts","./src/tools.ts","./src/types.ts"],"version":"6.0.2"}
