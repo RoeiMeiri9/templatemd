@@ -16,12 +16,12 @@ async function init() {
     .help("help") // enables --help
     .alias("help", "h").argv; // alias -h
 
-  const { watch: path, benchmark } = await argv;
+  const { watch: path } = await argv;
 
   if (!path) {
     throw new Error("No file/folder specified. Use --help for usage.");
   }
-  Logger.info("Watching:", path);
+  Logger.INFO("Watching:", path);
   subscribeLogs(Logger);
 
   watchFile(path);

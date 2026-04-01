@@ -1,22 +1,34 @@
-export type BenchmarksTimes = { start: number; end: number };
-export type FMContent = Record<string, any>;
-export type VariablesMatcher = {
-  encounteredError: boolean;
-  variables?: Record<string, string>;
-  newFMContent?: string;
-  EOL?: string;
-  fmMatch?: RegExpMatchArray;
-};
-export type Status = "SUCCESS" | "WARN" | "ERROR";
-
 export type OrchestratorOutput = {
   content: string;
   status: Status;
+  reportCompilation: (
+    path: string,
+    durationNanos: bigint,
+    status: Status,
+  ) => void;
 };
 
-export interface EmdLogger {
-  info: (...args: any[]) => void;
-  success: (...args: any[]) => void;
-  warn: (...args: any[]) => void;
-  error: (...args: any[]) => void;
+export enum Status {
+  SUCCESS = 1,
+  WARN = 2,
+  ERROR = 3,
 }
+
+export type StatusLogFunctions = {
+  [K in keyof typeof Status]: (...args: any[]) => void;
+};
+
+export interface EmdLogger extends StatusLogFunctions {
+  INFO: (...args: any[]) => void;
+}
+
+export type FMContent = Record<string, any>;
+
+export type VariableCall = {
+  name: string;
+  line: number;
+  column: number;
+  raw: string;
+  index: number;
+  error?: string; // TODO: Make an actual error in a different commit
+};

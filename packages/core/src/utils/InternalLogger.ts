@@ -1,6 +1,6 @@
 import { YAMLException } from "js-yaml";
 import os from "os";
-import type { Status, EmdLogger } from "../types.js";
+import { Status, type EmdLogger, type StatusLogFunctions } from "../types.js";
 
 export class InternalLogger {
   private _api?: EmdLogger;
@@ -8,14 +8,15 @@ export class InternalLogger {
 
   constructor() {
     this.api = new Proxy({} as EmdLogger, {
-      get: (target, prop: keyof EmdLogger) => {
+      get: (target, p: string | symbol) => {
         if (!this._api) {
           console.warn(
-            `[InternalLogger]: API not set! Tried to call "${prop}".`,
+            `[InternalLogger]: API not set! Tried to call "${String(p)}".`,
           );
           return () => {};
         }
 
+        const prop = p as keyof EmdLogger;
         const value = this._api[prop];
 
         if (typeof value === "function") {
@@ -32,20 +33,35 @@ export class InternalLogger {
   }
 
   info(msg: string, ...args: any[]) {
-    this.api.info(msg, ...args);
+    this.api.INFO(msg, ...args);
   }
 
   reportCompilation(path: string, durationNanos: bigint, status: Status) {
-    const message = `Compiled ${path}. Time: ${formatHrTime(durationNanos)}`;
-    status === "SUCCESS" ? this.api.success(message) : this.api.warn(message);
+    const statusMessages = {
+      [Status.SUCCESS]: `Compiled successfully`,
+      [Status.WARN]: `Compiled with warnings`,
+      [Status.ERROR]: `Compilation of failed with errors`,
+    };
+
+    const statusName = Status[status] as keyof StatusLogFunctions;
+    const baseMessage = statusMessages[status];
+    const timeInfo = `(${formatHrTime(durationNanos)})`;
+
+    const finalMessage = `${baseMessage}: ${path} ${timeInfo}`;
+
+    this.api[statusName](finalMessage);
+  }
+
+  warn(...args: any[]) {
+    this.api.WARN(...args);
   }
 
   error(...args: any[]) {
-    this.api.error(...args);
+    this.api.ERROR(...args);
   }
 
   yamlException(err: YAMLException) {
-    this.api.error("Parsing failed:", os.EOL, err.reason, os.EOL, err.stack);
+    this.api.ERROR("Parsing failed:", os.EOL, err.reason, os.EOL, err.stack);
   }
 }
 
@@ -61,4 +77,8 @@ function formatHrTime(nanos: bigint): string {
 
   const seconds = (ms / 1000).toFixed(2);
   return `${seconds}s`;
+}
+
+export function getMaxStatus(current: Status, incoming: Status): Status {
+  return Math.max(current, incoming) as Status;
 }
