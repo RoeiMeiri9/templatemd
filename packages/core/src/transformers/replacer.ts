@@ -18,13 +18,14 @@ export function replaceValues(
     const value = variables[call.name];
     if (value === undefined) {
       const tempError = new Error();
+
       diagnostics.push({
         level: Status.WARN,
         message: `Variable ${call.name} is not specified`,
         varName: call.name,
         line: call.line,
         column: call.column,
-        stack: tempError.stack,
+        stack: tempError.stack || "",
       });
       return undefined;
     }

@@ -29,7 +29,7 @@ export function getPosition(
   const lines = textBefore.split(EOL);
 
   const line = lines.length - 1;
-  const column = lines[lines.length - 1].length + 1;
+  const column = (lines[lines.length - 1]?.length || -1) + 1;
 
   return { line, column };
 }

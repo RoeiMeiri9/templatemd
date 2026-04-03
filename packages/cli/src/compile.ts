@@ -10,7 +10,7 @@ import {
 export async function compileFile(path: string, verbose: boolean) {
   try {
     const content = await getContent(path);
-    const { compiled, status, diagnostics, duration } = await compile(content);
+    const { compiled, status, diagnostics, duration } = compile(content);
 
     diagnostics.forEach((diagnostic) =>
       printDiagnostic(diagnostic, content, verbose),

@@ -15,8 +15,8 @@ export interface EmdLogger extends StatusLogFunctions {
 export interface Diagnostic {
   level: Status;
   message: string;
-  line?: number;
-  column?: number;
+  line?: number | undefined;
+  column?: number | undefined;
   varName?: string;
-  stack?: string;
+  stack?: string | undefined;
 }

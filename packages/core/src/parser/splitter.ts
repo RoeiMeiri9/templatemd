@@ -26,7 +26,7 @@ export function getBodyAndFM(content: string): {
     };
   }
   return {
-    fm: match[1],
+    fm: match[1] ?? null,
     rawFMBlock: match[0],
     body: content.slice(match[0].length),
     diagnostics: [],

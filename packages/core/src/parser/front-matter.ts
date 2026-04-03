@@ -2,14 +2,14 @@ import { load, dump, YAMLException } from "js-yaml";
 import type { FMContent } from "../types/core.types.js";
 import { Status, type Diagnostic } from "../types/logger.types.js";
 
-export async function extractFM(fm: string | null): Promise<{
+export function extractFM(fm: string | null): {
   parsedFM: FMContent | null;
   diagnostic: Diagnostic | null;
-}> {
+} {
   if (!fm) return { parsedFM: null, diagnostic: null };
 
   try {
-    const parsedFM = (await load(fm)) as FMContent;
+    const parsedFM = load(fm) as FMContent;
     return { parsedFM, diagnostic: null };
   } catch (err) {
     const yamlError = err as YAMLException;

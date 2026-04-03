@@ -6,7 +6,7 @@ import { getBodyAndFM } from "./parser/splitter.js";
 import { type Diagnostic } from "./types/logger.types.js";
 import { Duration } from "./utils/Duration.js";
 
-export async function compile(content: string) {
+export function compile(content: string) {
   const startTime = process.hrtime.bigint();
 
   const {
@@ -16,7 +16,7 @@ export async function compile(content: string) {
     diagnostics: splitDiag,
   } = getBodyAndFM(content);
 
-  const { parsedFM, diagnostic } = await extractFM(fm);
+  const { parsedFM, diagnostic } = extractFM(fm);
   const EOL = getEOL(content);
   const finalFM = parsedFM ? cleanFM(parsedFM, EOL) : "";
 
