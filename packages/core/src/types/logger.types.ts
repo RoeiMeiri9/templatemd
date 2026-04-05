@@ -17,6 +17,9 @@ export interface Diagnostic {
   message: string;
   line?: number | undefined;
   column?: number | undefined;
+  position?: number | undefined;
+  namePosition?: number | undefined;
+  length?: number | undefined;
   varName?: string;
   stack?: string | undefined;
 }

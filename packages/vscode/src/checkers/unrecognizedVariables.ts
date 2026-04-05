@@ -1,9 +1,9 @@
 import * as vscode from "vscode";
 
-export function checkUnrecognizedVariable(
+export function checkUnrecognizedVariables(
   text: string,
   document: vscode.TextDocument,
-  variables: object
+  variables: object,
 ) {
   const regex = /\{\{\s?(\S+)\s?\}\}/g;
   const diagnostics: vscode.Diagnostic[] = [];
@@ -26,8 +26,8 @@ export function checkUnrecognizedVariable(
         new vscode.Diagnostic(
           new vscode.Range(start, end),
           msg,
-          vscode.DiagnosticSeverity.Warning
-        )
+          vscode.DiagnosticSeverity.Warning,
+        ),
       );
     }
   }

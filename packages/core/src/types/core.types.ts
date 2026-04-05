@@ -17,8 +17,14 @@ export type VariableCall = {
   line: number;
   column: number;
   raw: string;
-  index: number;
-  error?: string; // TODO: Make an actual error in a different commit
+
+  //Position in relation to body
+  bodyOffset: number;
+  bodyNameOffset: number;
+
+  //Position in relation to full document
+  fullOffset: number;
+  fullNameOffset: number;
 };
 
 export type varPosition = { line: number; column: number };

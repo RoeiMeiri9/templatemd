@@ -42,7 +42,9 @@ export function printDiagnostic(
   source: string,
   verbose = false,
 ) {
-  const { level, message, line, column } = diagnostic;
+  const { level, message, line: rawLine, column: rawColumn } = diagnostic;
+  const line = zeroToOneCounter(rawLine);
+  const column = zeroToOneCounter(rawColumn);
 
   const position = line ? ` (${line}:${column})` : "";
   const frame = line
@@ -62,4 +64,8 @@ export function printDiagnostic(
   if (verbose && diagnostic.stack) {
     console.log(diagnostic.stack);
   }
+}
+
+function zeroToOneCounter(rawNumber: number | undefined) {
+  return rawNumber ? rawNumber + 1 : undefined;
 }

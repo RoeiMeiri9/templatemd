@@ -2,15 +2,16 @@ import * as vscode from "vscode";
 import { provideCompletionItems } from "./completion";
 import { EmdDefinitionProvider } from "./EmdDefinitionProvide";
 import { provideDocumentFormattingEdits } from "./formatter";
-import { checkUnrecognizedVariable } from "./checkers";
-import { getVariables } from "./tools";
 import { EmdRenameProvider } from "./EmdRenameProvider";
 import { EmdQuoteFixProvider } from "./EmdQuoteFixProvider";
 import { fixQuotes } from "./commands";
+import { check as getCheck } from "./validate";
 
 export function activate(context: vscode.ExtensionContext) {
   const fileType = "emd";
   const collections = vscode.languages.createDiagnosticCollection("emd");
+
+  const check = getCheck(collections);
 
   const provider = vscode.languages.registerCompletionItemProvider(
     fileType,
@@ -68,22 +69,6 @@ export function activate(context: vscode.ExtensionContext) {
     onClosed,
     quoteFixProvider,
   );
-
-  function check(document: vscode.TextDocument) {
-    let diagnostics: vscode.Diagnostic[] = [];
-    if (document.languageId !== "emd") return;
-
-    const text = document.getText();
-
-    const { fmData } = getVariables(document);
-    if (fmData?.variables) {
-      diagnostics.push(
-        ...checkUnrecognizedVariable(text, document, fmData.variables),
-      );
-    }
-
-    collections.set(document.uri, diagnostics);
-  }
 }
 
 export function deactivate() {}
